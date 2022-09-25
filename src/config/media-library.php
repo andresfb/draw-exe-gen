@@ -2,7 +2,7 @@
 
 use App\Libraries\MediaFileNamer;
 use App\Libraries\MediaPathGenerator;
-use App\Media;
+use App\Models\Media;
 
 return [
 
