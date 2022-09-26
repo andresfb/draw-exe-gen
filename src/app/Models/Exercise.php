@@ -33,15 +33,14 @@ class Exercise extends Model implements HasMedia
     /**
      * random Method.
      *
-     * @return Exercise
+     * @return Exercise|null
      */
-    public static function random(): Exercise
+    public static function random(): ?Exercise
     {
         return Exercise::whereActive(true)
             ->inRandomOrder()
             ->first();
     }
-
 
     /**
      * tools Method.

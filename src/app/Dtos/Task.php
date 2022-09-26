@@ -2,7 +2,9 @@
 
 namespace App\Dtos;
 
-class Task
+use Illuminate\Contracts\Support\Arrayable;
+
+class Task implements Arrayable
 {
     /** @var string */
     private string $title;
@@ -145,6 +147,16 @@ class Task
     }
 
     /**
+     * getSampleText Method.
+     *
+     * @return string
+     */
+    public function getSampleText(): string
+    {
+        return implode(PHP_EOL, $this->samples);
+    }
+
+    /**
      * @param string $video
      * @return Task
      */
@@ -160,5 +172,41 @@ class Task
     public function getVideo(): string
     {
         return $this->video;
+    }
+
+    /**
+     * getHeaders Method.
+     *
+     * @return string[]
+     */
+    public function getHeaders(): array
+    {
+        return [
+            'Title',
+            'Sub Title',
+            'Description',
+            'Repetitions',
+            'Tool',
+            'Samples',
+            'Videos',
+        ];
+    }
+
+    /**
+     * toArray Method.
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            $this->getTitle(),
+            $this->getSubTitle(),
+            $this->getDescription(),
+            $this->getRepetitions(),
+            $this->getTool(),
+            $this->getSampleText(),
+            $this->getVideo(),
+        ];
     }
 }

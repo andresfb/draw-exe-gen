@@ -48,6 +48,7 @@ class GenerateExerciseService
             $task->setSamples($image->getUrl());
         }
 
+        $task->setTool($exercise->tools()->inRandomOrder()->first());
         return $task;
     }
 }
