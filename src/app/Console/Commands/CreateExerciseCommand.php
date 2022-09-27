@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use App\Models\Exercise;
+use App\Models\Tool;
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
@@ -15,6 +17,9 @@ class CreateExerciseCommand extends Command
 
     /** @var string */
     protected $description = 'Data Entry command to create a new Exercise';
+
+    /** @var Collection  */
+    private Collection $tools;
 
 
     /**
@@ -28,6 +33,10 @@ class CreateExerciseCommand extends Command
             if ($this->confirm("View a list of existing exercies?", true)) {
                 $this->showList();
             }
+
+            $this->tools = Tool::select(['id', 'name'])
+                ->orderBy('id')
+                ->get();
 
             $continue = true;
             while ($continue) {
@@ -131,7 +140,7 @@ class CreateExerciseCommand extends Command
             0
         );
 
-        // TODO: ask for the tools
+        $tools = $this->getTools();
 
         $data['video_link'] = $this->getValue('Video Link', false);
 
@@ -144,6 +153,7 @@ class CreateExerciseCommand extends Command
         }
 
         $exercise = Exercise::create($data);
+        $exercise->tools()->attach($tools->pluck('id')->toArray());
         foreach ($samples as $sample) {
             $exercise->addMedia($sample)
                 ->preservingOriginal()
@@ -249,6 +259,35 @@ class CreateExerciseCommand extends Command
         }
 
         return $sample;
+    }
+
+    /**
+     * getTools Method.
+     *
+     * @return Collection
+     */
+    private function getTools(): Collection
+    {
+        $options = [];
+        /** @var Tool $tool */
+        foreach ($this->tools as $tool) {
+            $options[$tool->id] = $tool->name;
+        }
+
+        $options[count($options) + 1] = "All";
+        $tools = $this->choice(
+            'Select the usable tools',
+            $options,
+            count($options),
+            null,
+            true
+        );
+
+        if (in_array("All", $tools)) {
+            return $this->tools;
+        }
+
+        return $this->tools->whereIn('name', $tools);
     }
 
     /**

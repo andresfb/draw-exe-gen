@@ -49,7 +49,7 @@ class Exercise extends Model implements HasMedia
      */
     public function tools(): BelongsToMany
     {
-        return $this->belongsToMany(Tools::class);
+        return $this->belongsToMany(Tool::class);
     }
 
     /**

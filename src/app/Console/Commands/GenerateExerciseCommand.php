@@ -33,10 +33,13 @@ class GenerateExerciseCommand extends Command
         try {
             $task = $this->service->execute();
 
-            $this->table($task->getSamples(), $task);
+            $this->newLine();
+            $this->table($task->getHeaders(), $task);
 
             $this->newLine();
             $this->info("Done");
+            $this->newLine();
+
             return 0;
         } catch (Exception $e) {
             $this->error("\nError found:\n");

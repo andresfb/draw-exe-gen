@@ -200,13 +200,15 @@ class Task implements Arrayable
     public function toArray(): array
     {
         return [
-            $this->getTitle(),
-            $this->getSubTitle(),
-            $this->getDescription(),
-            $this->getRepetitions(),
-            $this->getTool(),
-            $this->getSampleText(),
-            $this->getVideo(),
+            [
+                'title' => $this->getTitle(),
+                'sub_itle' => $this->getSubTitle(),
+                'description' => $this->getDescription(),
+                'repetitions' => $this->getRepetitions(),
+                'tool' => $this->getTool(),
+                'samples' => $this->getSampleText(),
+                'videos' => $this->getVideo(),
+            ]
         ];
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('exercises_tools', function (Blueprint $table) {
+        Schema::create('exercise_tool', function (Blueprint $table) {
             $table->id();
             $table->foreignId('exercise_id')
                 ->references('id')
@@ -21,6 +21,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('exercises_tools');
+        Schema::dropIfExists('exercise_tool');
     }
 };
