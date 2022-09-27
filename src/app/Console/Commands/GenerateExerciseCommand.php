@@ -35,6 +35,8 @@ class GenerateExerciseCommand extends Command
 
             $this->table($task->getSamples(), $task);
 
+            $this->newLine();
+            $this->info("Done");
             return 0;
         } catch (Exception $e) {
             $this->error("\nError found:\n");
