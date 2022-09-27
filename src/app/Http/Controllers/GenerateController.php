@@ -20,7 +20,7 @@ class GenerateController extends Controller
     {
         try {
             $task = $service->execute();
-            return view('generate', compact($task));
+            return view('generate', $task->first());
         } catch (Exception $ex) {
             return view('generate')->with('error', $ex->getMessage());
         }

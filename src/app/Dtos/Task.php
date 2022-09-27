@@ -175,6 +175,16 @@ class Task implements Arrayable
     }
 
     /**
+     * first Method.
+     *
+     * @return array
+     */
+    public function first(): array
+    {
+        return $this->toArray()[0];
+    }
+
+    /**
      * getHeaders Method.
      *
      * @return string[]
