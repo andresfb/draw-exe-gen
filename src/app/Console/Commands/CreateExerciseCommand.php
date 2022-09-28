@@ -30,9 +30,7 @@ class CreateExerciseCommand extends Command
     public function handle(): int
     {
         try {
-            if ($this->confirm("View a list of existing exercies?", true)) {
-                $this->showList();
-            }
+            $this->showList();
 
             $this->tools = Tool::select(['id', 'name'])
                 ->orderBy('id')
@@ -59,10 +57,16 @@ class CreateExerciseCommand extends Command
      */
     private function showList(): void
     {
-        $selects = ['id', 'title', 'sub_title', 'description'];
-        $list = Exercise::select($selects)
-            ->whereActive(true)
-            ->get();
+        $list = Exercise::select([
+            "id",
+            'title',
+            'sub_title',
+            \DB::raw(
+                'CONCAT( SUBSTRING(`description`, 1, 110), IF(LENGTH(`description`) > 110, "...", ""))'
+            )
+        ])
+        ->whereActive(true)
+        ->get();
 
         if (!$list->count()) {
             $this->newLine();
@@ -71,7 +75,8 @@ class CreateExerciseCommand extends Command
             return;
         }
 
-        $this->table($selects, $list);
+        $headers = ['Id', 'Title', 'Sub Title', 'Description'];
+        $this->table($headers, $list, "box-double");
     }
 
     /**
