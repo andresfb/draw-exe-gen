@@ -30,14 +30,13 @@ class CreateExerciseCommand extends Command
     public function handle(): int
     {
         try {
-            $this->showList();
-
             $this->tools = Tool::select(['id', 'name'])
                 ->orderBy('id')
                 ->get();
 
             $continue = true;
             while ($continue) {
+                $this->showList();
                 $continue = $this->getAction();
             }
 
@@ -62,7 +61,7 @@ class CreateExerciseCommand extends Command
             'title',
             'sub_title',
             \DB::raw(
-                'CONCAT( SUBSTRING(`description`, 1, 110), IF(LENGTH(`description`) > 110, "...", ""))'
+                'CONCAT( SUBSTRING(`description`, 1, 92), IF(LENGTH(`description`) > 92, "...", ""))'
             )
         ])
         ->whereActive(true)

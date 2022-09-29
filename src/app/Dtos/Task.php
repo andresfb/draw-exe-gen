@@ -212,12 +212,12 @@ class Task implements Arrayable
         return [
             [
                 'title' => $this->getTitle(),
-                'sub_itle' => $this->getSubTitle(),
+                'sub_title' => $this->getSubTitle(),
                 'description' => $this->getDescription(),
                 'repetitions' => $this->getRepetitions(),
                 'tool' => $this->getTool(),
-                'samples' => $this->getSampleText(),
-                'videos' => $this->getVideo(),
+                'samples' => $this->getSamples(),
+                'video' => $this->getVideo(),
             ]
         ];
     }
