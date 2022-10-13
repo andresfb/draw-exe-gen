@@ -31,17 +31,13 @@
 
         <section>
 
-            @if(!empty($error))
-                <div class="row">
-                    <div class="col">
-                        <div class="alert-danger">{{ $error }}</div>
-                    </div>
+        @if(!empty($error))
+            <div class="row">
+                <div class="col">
+                    <div class="alert-danger">{{ $error }}</div>
                 </div>
-            @endif
-
-        </section>
-
-        <section>
+            </div>
+        @else
             <div class="row">
                 <div class="col">
                     <h3>{{ $title }}</h3>
@@ -102,13 +98,16 @@
                                     title="YouTube video player"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen></iframe>
+                                    allowfullscreen>
+                            </iframe>
                         </div>
                     @else
                         <a href="{{ $video }}">Preview Video</a>
                     @endif
                 </div>
             </div>
+
+        @endif
 
         </section>
 
